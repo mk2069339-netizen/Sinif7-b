@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isTeacher() {
+      return signedIn() && request.auth.token.email == 'ustoz@maktab-dbd09.firebaseapp.com';
+    }
+
+    // O'quvchilar ro'yxati, joylar va parollar: hamma o'qiydi, faqat ustoz o'zgartiradi
+    match /students/{id} {
+      allow read: if signedIn();
+      allow write: if isTeacher();
+    }
+    // Sinf sozlamalari va dars jadvali: faqat ustoz o'zgartiradi
+    match /config/{id} {
+      allow read: if signedIn();
+      allow write: if isTeacher();
+    }
+    match /timetable/{id} {
+      allow read: if signedIn();
+      allow write: if isTeacher();
+    }
+    // Chat: hamma yozadi; o'z xabarini yoki ustoz istalganini o'chiradi
+    match /chat/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 500
+        && (request.resource.data.sid != 'teacher' || isTeacher());
+      allow delete: if isTeacher() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+  }
+}
