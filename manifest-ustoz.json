@@ -1,0 +1,32 @@
+{
+ "id": "sinf7b-ustoz",
+ "name": "7-B sinf — Ustoz",
+ "short_name": "7-B Ustoz",
+ "start_url": "./ustoz.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#1f3a31",
+ "theme_color": "#1f3a31",
+ "lang": "uz",
+ "description": "7-B sinf: sinf xaritasi, chat va dars jadvali",
+ "icons": [
+  {
+   "src": "ustoz-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "ustoz-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "ustoz-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
